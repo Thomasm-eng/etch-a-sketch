@@ -7,18 +7,20 @@ function createGrid(num) {
     for (i = 0; i < num*num; i++){
         const cell = document.createElement('div');
         cell.classList.add('cell-style');
-        
         container.appendChild(cell);
     }
 }
 
 function getInput() {
     let input = prompt("Enter a Number:");
-    if (input < 65) {
+    if (input == null) {
+        getInput();
+    }
+    else if (input < 65 && input.length > 0) {
         createGrid(input);
     }
     else {
-        alert("Enter a Number in 1-64 Range:");
+        alert("Enter number in 1-65 range.");
         getInput();
     }
 }
@@ -28,4 +30,19 @@ function reset() {
     .forEach((e) => e.parentNode.removeChild(e));
 }
 
-document.getElementById('button').addEventListener('click', getInput);
+function colorCell() {
+    document.querySelectorAll('.cell-style').forEach(item => 
+        {item.addEventListener('mouseover', e => {
+            e.target.style.backgroundColor = "black";
+        });
+    });
+}
+createGrid(16);
+colorCell();
+document.getElementById('button').addEventListener('click', () => {
+    reset();
+    getInput();
+    colorCell();
+});
+
+    
